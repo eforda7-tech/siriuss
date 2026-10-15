@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сириус Спорт — организация спортивных мероприятий</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #1e2530;
+    --bg-soft: #262e3a;
+    --card: #2b3542;
+    --green: #2f6fa8;
+    --green-bright: #4da3e0;
+    --green-line: #1f3a52;
+    --text: #eeeee6;
+    --muted: #9aa093;
+    --radius: 14px;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+  h1,h2,h3,.logo{ font-family:'Manrope', sans-serif; }
+  a{ color: inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: var(--green);
+    color:#0e120e;
+    font-weight:700;
+    font-size: 15px;
+    border: none;
+    cursor:pointer;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .btn:hover{ background: var(--green-bright); transform: translateY(-1px); }
+  .btn-outline{
+    background: transparent;
+    color: var(--green-bright);
+    border: 1.5px solid var(--green-line);
+  }
+  .btn-outline:hover{ border-color: var(--green-bright); background: rgba(77,163,224,.08); }
+
+  /* Header */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(30,37,48,.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--green-line);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 14px 0;
+    gap: 24px;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:19px; }
+  .logo-mark{
+    width:34px; height:34px; border-radius:9px;
+    background: linear-gradient(135deg, var(--green), var(--green-bright));
+    display:flex; align-items:center; justify-content:center;
+    color:#0e120e; font-weight:800; font-size:15px;
+  }
+  nav{ display:flex; gap: 28px; }
+  nav a{ font-size:14.5px; color: var(--muted); transition: color .2s; white-space:nowrap; }
+  nav a:hover{ color: var(--text); }
+  .header-right{ display:flex; align-items:center; gap:20px; }
+  .phone{ font-size:14.5px; font-weight:600; white-space:nowrap; }
+  .phone span{ display:block; font-size:11.5px; color:var(--muted); font-weight:400; }
+  .burger{ display:none; background:none; border:none; color:var(--text); font-size:24px; cursor:pointer; }
+
+  /* Hero */
+  .hero{
+    position: relative;
+    padding: 90px 0 100px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero::before{
+    content:"";
+    position: absolute; inset:0;
+    background-image:
+      linear-gradient(120deg, rgba(24,30,39,.94) 20%, rgba(24,30,39,.55) 60%, rgba(24,30,39,.25)),
+      url('https://commons.wikimedia.org/wiki/Special:FilePath/2021_London_Marathon.jpg');
+    background-size: cover;
+    background-position: center 30%;
+    z-index: -1;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items:center;
+  }
+  .hero h1{
+    font-size: clamp(30px, 4vw, 46px);
+    font-weight: 800;
+    line-height: 1.12;
+    margin-bottom: 26px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em{ color: var(--green-bright); font-style:normal; }
+  .stats{ display:flex; flex-direction:column; gap:10px; margin-bottom: 30px; }
+  .stat{ display:flex; align-items:baseline; gap:10px; }
+  .stat b{ font-size: 30px; color: var(--green-bright); font-family:'Manrope',sans-serif; }
+  .stat span{ color: var(--muted); font-size:15px; }
+
+  .hero-visual{
+    background: rgba(43,53,66,.82);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--green-line);
+    border-radius: var(--radius);
+    padding: 22px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .hero-visual-title{ font-size:13px; color:var(--muted); margin-bottom:2px; }
+  .visual-item{
+    border-radius: 10px;
+    padding: 18px;
+    display:flex; align-items:center; justify-content:space-between;
+    border: 1px solid var(--green-line);
+    background: linear-gradient(135deg, rgba(45,120,180,.22), rgba(43,53,66,0));
+  }
+  .visual-item b{ font-size:15px; }
+  .visual-item span{ font-size:12.5px; color:var(--muted); }
+
+  /* About */
+  .about{ padding: 60px 0; border-top: 1px solid var(--green-line); }
+  .about-grid{ display:grid; grid-template-columns: .85fr 1.15fr; gap:48px; align-items:center; }
+  .about-photo{
+    border-radius: var(--radius);
+    overflow:hidden;
+    border: 1px solid var(--green-line);
+    aspect-ratio: 4/3;
+  }
+  .about-photo img{ width:100%; height:100%; object-fit: cover; }
+  .about h2{ font-size: clamp(24px,3vw,32px); font-weight:800; line-height:1.25; margin-bottom:16px; }
+  .about p{ color: var(--muted); font-size: 15.5px; }
+  .about p + p{ margin-top: 14px; }
+
+  /* Categories */
+  .categories{ padding: 60px 0 64px; }
+  .section-head{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom: 30px; gap: 20px; flex-wrap:wrap; }
+  .section-head h2{ font-size: clamp(22px,3vw,28px); font-weight:800; }
+  .grid-cards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .photo-card{
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    border: 1px solid var(--green-line);
+    transition: transform .2s ease;
+  }
+  .photo-card:hover{ transform: translateY(-3px); }
+  .photo-card img{
+    width:100%; height:100%; object-fit: cover;
+    transition: transform .4s ease;
+  }
+  .photo-card:hover img{ transform: scale(1.05); }
+  .photo-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(10,11,8,.88) 0%, rgba(10,11,8,.15) 55%, rgba(10,11,8,0) 100%);
+  }
+  .photo-card-label{
+    position:absolute; left:16px; bottom:14px; z-index:2;
+    font-weight:700; font-size:17px;
+  }
+  .photo-card-label span{
+    display:block; font-weight:400; font-size:12.5px; color:#cfd6c9; margin-top:2px;
+  }
+
+  /* Request form */
+  .request{ padding: 20px 0 64px; }
+  .request-box{
+    background: var(--card);
+    border: 1px solid var(--green-line);
+    border-radius: var(--radius);
+    padding: 36px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items:center;
+  }
+  .request-box h2{ font-size: clamp(22px,3vw,28px); font-weight:800; margin-bottom:10px; }
+  .request-box p{ color: var(--muted); font-size:14.5px; }
+  .request-form{ display:flex; flex-direction:column; gap:12px; }
+  .request-form input,
+  .request-form textarea{
+    width:100%;
+    background: var(--bg-soft);
+    border: 1px solid var(--green-line);
+    border-radius: 10px;
+    padding: 13px 16px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    outline: none;
+    transition: border-color .2s ease;
+  }
+  .request-form input::placeholder,
+  .request-form textarea::placeholder{ color: var(--muted); }
+  .request-form input:focus,
+  .request-form textarea:focus{ border-color: var(--green-bright); }
+  .request-form textarea{ resize: vertical; min-height: 90px; }
+  .request-form .btn{ align-self:flex-start; margin-top:4px; }
+  .form-note{ font-size:12.5px; color: var(--muted); margin-top:4px; }
+
+  @media (max-width: 860px){
+    .request-box{ grid-template-columns: 1fr; }
+  }
+
+  /* CTA banner */
+  .cta-banner{
+    margin: 0 auto 64px;
+    max-width: 1160px;
+    border-radius: 18px;
+    background: linear-gradient(120deg, #1f5178, #132a3f);
+    padding: 34px 36px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .cta-banner h3{ font-size: 19px; font-weight:700; max-width: 520px; }
+  .cta-banner p{ color:#c9d6c8; font-size:13.5px; margin-top:4px; }
+
+  /* Footer */
+  footer{ border-top: 1px solid var(--green-line); padding: 40px 0 30px; }
+  .footer-grid{ display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+  footer h4{ font-size:14px; margin-bottom: 12px; color: var(--text); }
+  footer .muted{ color: var(--muted); font-size:14px; }
+  footer ul{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  footer ul a{ color: var(--muted); font-size: 14px; }
+  footer ul a:hover{ color: var(--green-bright); }
+  .footer-bottom{
+    border-top: 1px solid var(--green-line);
+    padding-top: 18px;
+    display:flex; justify-content:space-between; color: var(--muted); font-size:13px; flex-wrap:wrap; gap:10px;
+  }
+
+  @media (max-width: 860px){
+    nav{ display:none; }
+    .burger{ display:block; }
+    .hero-grid, .about-grid{ grid-template-columns: 1fr; }
+    .grid-cards{ grid-template-columns: repeat(2,1fr); }
+    .footer-grid{ grid-template-columns: 1fr; }
+    .phone{ display:none; }
+  }
+  @media (max-width: 520px){
+    .grid-cards{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <div class="logo"><span class="logo-mark">СС</span> Сириус Спорт</div>
+    <nav>
+      <a href="#about">О нас</a>
+      <a href="#services">Услуги</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header-right">
+      <div class="phone">+7 (928) 812-07-49<span>Пн–Вс, 9:00–20:00</span></div>
+      <a href="#request" class="btn">Оставить заявку</a>
+      <button class="burger">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Организуем спортивные мероприятия <em>под ключ</em> — от идеи до финиша</h1>
+      <div class="stats">
+        <div class="stat"><b>120+</b><span>проведённых мероприятий</span></div>
+        <div class="stat"><b>15</b><span>видов спорта в портфолио</span></div>
+        <div class="stat"><b>8 000+</b><span>довольных участников</span></div>
+      </div>
+      <a href="#request" class="btn">Обсудить мероприятие</a>
+    </div>
+
+    <div class="hero-visual">
+      <span class="hero-visual-title">Чем занимаемся</span>
+      <div class="visual-item"><div><b>Забеги и марафоны</b><br><span>от 100 до 50 участников</span></div></div>
+      <div class="visual-item"><div><b>Корпоративные турниры</b><br><span>командный спорт, тимбилдинг</span></div></div>
+      <div class="visual-item"><div><b>Детские спортивные лагеря</b><br><span>сборы и смены по всей России</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/YMCA%20children%27s%20class%20-%20NARA%20-%20559169.jpg" alt="Детская спортивная тренировка" loading="lazy">
+    </div>
+    <div>
+      <h2>Берём на себя всю организацию — вы получаете готовое мероприятие</h2>
+      <p>Планируете забег, турнир, корпоративную спартакиаду или детские спортивные сборы? Мы подбираем площадку, готовим программу, привлекаем судей и тренеров, решаем логистику и обеспечиваем мероприятие всем необходимым — от медицинской поддержки до наградной атрибутики.</p>
+      <p>Работаем с любым форматом: разовое событие на 50 человек или регулярная серия турниров на тысячи участников. Вы формулируете задачу — мы превращаем её в чёткий план и доводим до результата.</p>
+    </div>
+  </div>
+</section>
+
+<section class="categories" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Какие мероприятия организуем</h2>
+    </div>
+    <div class="grid-cards">
+      <div class="photo-card">
+        <img src="https://avatars.mds.yandex.net/i?id=629b8fc88918513d6c045a3f747bb54c368fdedc-5316645-images-thumbs&n=13" alt="Футбол" loading="lazy">
+        <div class="photo-card-label">Футбол и легкая атлетика <span>турниры и лиги</span></div>
+      </div>
+      <div class="photo-card">
+        <img src="https://avatars.mds.yandex.net/i?id=58b5642ea3d5f6b62638e7a57815d52e0c50580a-5232856-images-thumbs&n=13" alt="Баскетбол" loading="lazy">
+        <div class="photo-card-label">Баскетбол и волейбол<span>классические матчи</span></div>
+      </div>
+      <div class="photo-card">
+        <img src="https://avatars.mds.yandex.net/i?id=362a342a4da616755c2ac3722d8a8c289cb1465a-5886141-images-thumbs&n=13" alt="Волейбол" loading="lazy">
+        <div class="photo-card-label">Зимние виды спорта<span>шорт-трек, конькобежный спорт</span></div>
+      </div>
+      <div class="photo-card">
+        <img src="https://avatars.mds.yandex.net/i?id=bea15d02cd8a042b54ae12e4b6692e02d0a313b8-13305210-images-thumbs&n=13" alt="Забеги и марафоны" loading="lazy">
+        <div class="photo-card-label">Зимние виды спорта <span> скелетон,бобслей,санный спорт</span></div>
+      </div>
+      <div class="photo-card">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/%D0%94%D0%AE%D0%A1%D0%A8%20%D0%B3.%20%D0%9E%D0%B7%D1%91%D1%80%D1%81%D0%BA%D0%B0%2001.jpg" alt="Детские спортивные сборы" loading="lazy">
+        <div class="photo-card-label">Детские сборы<span>выездные тренировочные лагеря</span></div>
+      </div>
+      <div class="photo-card">
+        <img src="https://avatars.mds.yandex.net/i?id=e2794398140f30682fc0d8794a29d690b23f9919-5520044-images-thumbs&n=13" alt="Другие виды спорта" loading="lazy">
+        <div class="photo-card-label">И другие направления<span>бокс,дзюдо,самбо,сумо</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="request" id="request">
+  <div class="wrap request-box">
+    <div>
+      <h2>Оставить заявку</h2>
+      <p>Расскажите коротко о вашем мероприятии — перезвоним и обсудим детали в течение дня. Можно также написать напрямую по телефону или почте, указанным в контактах ниже.</p>
+    </div>
+    <form class="request-form" id="leadForm">
+      <input type="text" name="name" placeholder="Ваше имя" required>
+      <input type="tel" name="phone" placeholder="Телефон" required>
+      <textarea name="message" placeholder="Какое мероприятие хотите организовать"></textarea>
+      <button type="submit" class="btn">Отправить заявку</button>
+      <span class="form-note">Откроется письмо с вашими данными на siriussport23@yandex.ru</span>
+    </form>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div>
+    <h3>Оставьте заявку — подберём формат и площадку под ваше мероприятие за 3 дня</h3>
+    <p>Бесплатная консультация, без обязательств</p>
+  </div>
+  <a href="#request" class="btn">Оставить заявку</a>
+</div>
+
+<footer id="contacts">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:12px;"><span class="logo-mark">СС</span> Сириус Спорт</div>
+        <p class="muted">Организация спортивных мероприятий по всей России и Белоруссии.</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <ul>
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#request">Оставить заявку</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <ul>
+          <li class="muted">+7 (928) 812-07-49</li>
+           <li class="muted">+7 (928) 369-89-69</li>
+          <li class="muted">siriussport23@yandex.ru</li>
+          <li class="muted">Пн–Вс, 9:00–20:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Сириус Спорт. Все права защищены. ИНН 262803586407, ОГРН 322265100110255</span>
+      <span>Политика конфиденциальности</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('leadForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = this.name.value.trim();
+    var phone = this.phone.value.trim();
+    var message = this.message.value.trim();
+    var subject = encodeURIComponent('Заявка с сайта от ' + name);
+    var body = encodeURIComponent(
+      'Имя: ' + name + '\n' +
+      'Телефон: ' + phone + '\n' +
+      'Сообщение: ' + (message || '—')
+    );
+    window.location.href = 'mailto:siriussport23@yandex.ru?subject=' + subject + '&body=' + body;
+  });
+</script>
+</body>
+</html>
